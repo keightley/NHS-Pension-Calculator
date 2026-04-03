@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { ReactNode, ChangeEvent } from 'react';
 import { Info, ChevronDown, ChevronUp } from 'lucide-react';
 
 export function Tooltip({ text }: { text: string }) {
@@ -13,7 +14,7 @@ export function Tooltip({ text }: { text: string }) {
   );
 }
 
-export function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`bg-white rounded-xl border border-slate-200 shadow-sm ${className}`}>
       {children}
@@ -21,7 +22,7 @@ export function Card({ children, className = '' }: { children: React.ReactNode; 
   );
 }
 
-export function CardHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function CardHeader({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`px-5 py-4 border-b border-slate-100 ${className}`}>
       {children}
@@ -29,11 +30,11 @@ export function CardHeader({ children, className = '' }: { children: React.React
   );
 }
 
-export function CardBody({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function CardBody({ children, className = '' }: { children: ReactNode; className?: string }) {
   return <div className={`p-5 ${className}`}>{children}</div>;
 }
 
-export function SectionTitle({ children }: { children: React.ReactNode }) {
+export function SectionTitle({ children }: { children: ReactNode }) {
   return (
     <h2 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
       {children}
@@ -49,7 +50,7 @@ export function CollapsibleSection({
 }: {
   title: string;
   defaultOpen?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   badge?: string;
 }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -78,7 +79,7 @@ export function InputField({
   label, name, type = 'number', value, onChange, tooltip, step, disabled, min, max, error
 }: {
   label: string; name: string; type?: string; value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   tooltip?: string; step?: string; disabled?: boolean; min?: string; max?: string; error?: string;
 }) {
   return (
@@ -111,7 +112,7 @@ export function SelectField({
   label, name, value, onChange, options, tooltip
 }: {
   label: string; name: string; value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   options: { value: string; label: string }[];
   tooltip?: string;
 }) {
