@@ -14,8 +14,13 @@ export interface PensionInputs {
   name: string;
   dateJoinedScheme: string;
   legacyScheme: LegacyScheme;
-  retirementDate: string;
+  retirementDate: string; // When you stop working
   currentPay: number; // FTE pensionable pay
+
+  // Drawdown timing
+  splitDrawdown: boolean; // Advanced: draw legacy and CARE at different ages
+  legacyDrawDate: string; // When legacy pension starts (defaults to retirementDate)
+  careDrawDate: string;   // When CARE pension starts (defaults to retirementDate)
 
   // Service & ABS
   transferInYears: number;
@@ -84,6 +89,10 @@ export interface RemedyResult {
   legacyOption: { pension: number; lumpSum: number };
   careOption: { pension: number; lumpSum: number };
   betterOption: 'legacy' | 'care';
+  // Complete totals under each remedy choice
+  totalWithLegacyRemedy: { pension: number; lumpSum: number };
+  totalWithCareRemedy: { pension: number; lumpSum: number };
+  difference: number; // positive = legacy better
 }
 
 export interface FlexibilitiesResult {
@@ -117,12 +126,17 @@ export interface PensionResults {
   spa: number;
   spaDate: Date;
   ageAtRetirement: { years: number; months: number };
+  legacyDrawAge: { years: number; months: number };
+  careDrawAge: { years: number; months: number };
   totalService: number;
 
   // Results for each salary growth basis
   low: SingleBasisResult;  // CPI + 0%
   mid: SingleBasisResult;  // CPI + 1%
   high: SingleBasisResult; // CPI + 2%
+
+  // Deferred comparison (draw at NPA instead of retirement)
+  deferredMid: SingleBasisResult | null; // null if already at NPA
 
   // ABS check
   absCheck: {
@@ -140,6 +154,9 @@ export const DEFAULT_INPUTS: PensionInputs = {
   legacyScheme: '1995',
   retirementDate: '2047-06-15',
   currentPay: 55000,
+  splitDrawdown: false,
+  legacyDrawDate: '',
+  careDrawDate: '',
   transferInYears: 0,
   transferInDays: 0,
   useAbsData: false,
